@@ -18,7 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/ryanjmack/frontend-boilerplate.git"
   },
-  "author": "Ryan Mack
+  "author": "Ryan Mack",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ryanjmack/frontend-boilerplate/issues"
