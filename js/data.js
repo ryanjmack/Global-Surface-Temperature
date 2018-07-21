@@ -1,9 +1,6 @@
 // https://www.ncdc.noaa.gov/cag/global/background
 
-export const dataset = {
-  description: 'Surface temperature with respect to the 20th century average',
-  average: 13.9,
-  data: [
+export const dataset = [
       {
         "year": 1880,
         "month": 1,
@@ -8314,5 +8311,4 @@ export const dataset = {
         "month": 6,
         "variance": 1.06
       }
-    ]
-};
+];
