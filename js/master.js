@@ -8,11 +8,12 @@ const convertCelsius = (celsius) => Math.round((celsius * 1.8) * 100) / 100;  //
 const endYear = 2018;
 const height = 500;
 const legendPadding = 110;
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'June', 'July', 'September', 'October', 'November', 'December'];
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const monthsAbbreviations = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
 const startYear = 1880;
 const width = 1300;
 const xAxisPadding = 170;
-const yAxisPadding = 75;
+const yAxisPadding = 90;
 
 // create the svg element
 const svg = d3.select('main')
@@ -24,7 +25,7 @@ const svg = d3.select('main')
 // Scales
 // x axis is the year
 const xScale = d3.scaleLinear()
-  .domain([startYear, endYear])
+  .domain([startYear, endYear + 1])
   .range([yAxisPadding, width]);
 
 // y axis is the month
@@ -54,7 +55,7 @@ const getColor = (variance) => {
 
 
 // used for the bars in the visualization.
-const barHeight = (((height - xAxisPadding) / months.length) + 2); // 12 vertical bars (months); space closer together by adding 2
+const barHeight = ((height - xAxisPadding) / (months.length - 1)) - 1; // 12 vertical bars (months)
 const barWidth = (width / (endYear - startYear)) - 1; // 2018 - 1880 = 138 bars horizontally (years); add spacing by subtracting 1
 
 // populate the svg with data
@@ -71,8 +72,51 @@ svg.selectAll('rect')
   .text(data => `${months[data.month - 1]}, ${data.year}\nVariance: ${data.variance}°C / ${convertCelsius(data.variance)}°F`);
 
 
-// create lengend of colors
+/*
+  Add Axes
+*/
+const axesTickSize = 18;
+const axesNameFontSize = 25;
 
+const xAxis = d3.axisBottom(xScale)
+  .tickFormat(tick => tick);
+
+svg.append('g')
+  .attr('transform', `translate(0, ${height - xAxisPadding + barHeight})`)
+  .call(xAxis);
+
+svg.append('text')
+  .text('Year')
+  .attr('id', 'year')
+  .attr('font-size', axesNameFontSize)
+  .attr('font-weight', 'bold')
+  .attr('transform', `translate(${(width / 2)}, ${height - xAxisPadding + barHeight + axesTickSize + axesNameFontSize * 1.4})`)
+
+
+const yAxis = d3.axisLeft(yScale)
+  .tickFormat(month => monthsAbbreviations[month - 1]);
+
+svg.append('g')
+  .attr('id', 'yAxis')
+  .attr('transform', `translate(${yAxisPadding - 5}, ${barHeight / 2})`)
+  .call(yAxis);
+
+// remove the axis line; keep the ticks
+d3.select('#yAxis .domain').remove();
+
+// increase the font size size of the labels on the axes
+svg.selectAll('g')
+  .attr('font-size', axesTickSize);
+
+svg.append('text')
+  .text('Month')
+  .attr('id', 'month')
+  .attr('font-size', axesNameFontSize)
+  .attr('font-weight', 'bold')
+  .attr('transform', `translate(${axesNameFontSize}, ${(height - xAxisPadding + barHeight) / 2})rotate(270)`)
+
+
+// create legend of colors
 colors.forEach((color, i) => {
   const fontSize = 15;
   const squareSideLength = barHeight * 1.5;
