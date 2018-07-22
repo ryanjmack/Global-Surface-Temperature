@@ -7,11 +7,11 @@ const averageFahrenheit = 57;
 const convertCelsius = (celsius) => Math.round((celsius * 1.8) * 100) / 100;  // converts C to F rounding to nearest hundreth
 const endYear = 2018;
 const height = 500;
-const legendPadding = 60;
+const legendPadding = 110;
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'June', 'July', 'September', 'October', 'November', 'December'];
 const startYear = 1880;
 const width = 1300;
-const xAxisPadding = 150;
+const xAxisPadding = 170;
 const yAxisPadding = 75;
 
 // create the svg element
@@ -39,8 +39,9 @@ const minVariance = dataset.reduce((a, b) => a = (a > b.variance) ? b.variance :
 
 // colors used in the graph
 const colors = ['#0D095B', '#3249AB', '#127FC0', '#03CFD7', '#01C000', '#01C000', '#F8EF1C', '#FEBB11', '#F26322', '#FE0100'];
+const colorsLength = colors.length;
 // minVariance + (colorStep * i) will give us color index
-const colorStep = (maxVariance + Math.abs(minVariance)) / colors.length;
+const colorStep = (maxVariance + Math.abs(minVariance)) / colorsLength;
 
 // called when populating the graph with data
 const getColor = (variance) => {
@@ -68,3 +69,43 @@ svg.selectAll('rect')
   .attr('fill', data => getColor(data.variance))
   .append('title')
   .text(data => `${months[data.month - 1]}, ${data.year}\nVariance: ${data.variance}°C / ${convertCelsius(data.variance)}°F`);
+
+
+// create lengend of colors
+
+colors.forEach((color, i) => {
+  const fontSize = 15;
+  const squareSideLength = barHeight * 1.5;
+  const xCoord =  yAxisPadding + (squareSideLength * i);
+  const yCoord = height - xAxisPadding + legendPadding;
+
+  svg.append('rect')
+    .attr('x', xCoord)
+    .attr('y', yCoord)
+    .attr('width', squareSideLength)
+    .attr('height', squareSideLength)
+    .attr('fill', color);
+
+  svg.append('text')
+    .text(x => {
+      let output = `${Math.round((minVariance + (colorStep * i)) * 100) / 100}`;
+
+      if (output > 0) {
+        output = `+${output}`;
+      }
+      if (output.length != 5) { // pad output to hundreth place
+        output += '0';
+      }
+
+      return output;
+    })
+    .attr('transform', `translate(${xCoord + 4}, ${yCoord + squareSideLength + fontSize})`)
+    .attr('font-size', fontSize);
+
+  // add the legend title on the last interation
+  if (i === colorsLength - 1) {
+    svg.append('text')
+      .text('Variance from the 20th century mean (celsius)')
+      .attr('transform', `translate(${yAxisPadding}, ${yCoord - 4})`);
+  }
+});
