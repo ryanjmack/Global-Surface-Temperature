@@ -84,7 +84,9 @@ colors.forEach((color, i) => {
     .attr('y', yCoord)
     .attr('width', squareSideLength)
     .attr('height', squareSideLength)
-    .attr('fill', color);
+    .attr('fill', color)
+    .attr('stroke', 'black')
+    .attr('stoke-width', '1');
 
   svg.append('text')
     .text(x => {
@@ -99,7 +101,7 @@ colors.forEach((color, i) => {
 
       return output;
     })
-    .attr('transform', `translate(${xCoord + 4}, ${yCoord + squareSideLength + fontSize})`)
+    .attr('transform', `translate(${xCoord + (barWidth / 2)}, ${yCoord + squareSideLength + fontSize})`)
     .attr('font-size', fontSize);
 
   // add the legend title on the last interation
