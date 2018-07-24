@@ -1,18 +1,32 @@
-# frontend-project-template
+# Global Surface Temperature
 
-This is boilerplate code for simple front end projects, utilizing a task runner, gulp, which makes learning and development much easier.
+This is a simple data visualization project I created using a dataset I found from [NOAA](https://www.ncdc.noaa.gov/cag/global/background) (National Oceanic and Atmospheric Administration) using the popular data visualization library [D3.js](https://d3js.org/).
 
-## Basics
-The default task, `gulp`, will spin up a webserver on a local port that compiles scss to CSS and also autoprefixes the CSS. BrowserSync will watch for any changes to a file ending in .html, .scss and .js  in the `src/` directory and will reload the page to reflect any changes. There will also be a link in dev tools to a sourcemap (this shows what scss file and what line of that file is responsible for the css rule in devtools for easy debugging).
+I wanted to use an up to date dataset for my visualization and I found one that is current to May 2018. I sanitized the data using some scripts and stored in it in a JavaScript file. The graph aims to show the degree of variance of average monthly land temperature compared to the 20th century average; the graph shows data from 1880 to 2018. You can notice how there is a decent amount of temperature variance at the ends of the graph. The late 19th century was cooler, and the early 21st century was warmer.
 
-The only task that needs to be manually called is `gulp` -- simply type `gulp` on the command line while in the root of the repo.
+An interesting thing to note about temperature change on a worldwide scale is that "A half degree averaged out over the whole world can mean much more of an increase in some locations and at certain times" [source - nasa](
+https://climate.nasa.gov/news/2458/why-a-half-degree-temperature-rise-is-a-big-deal/).
 
-## How to use this repo
-1. If you want to modify this repo for your own personal use, fork it then follow the instructions. Otherwise skip the optional step.
-* Clone this repository
-* Navigate to the the root of the cloned repo
-* (OPTIONAL STEP) Reference the original boilerplate using `git remote add upstream URL`. This allows you to pull changes made to the boilerplate code in the future using `git pull upstream master`
-* Initialize an empty repo on Github and change the remote's URL `git remote set-url origin git@github.com:USERNAME/REPOSITORY.git`
-* Use`npm install` to get all required node modules
-* Type `gulp` in the command line while in the directory to run default task
-* Start coding
+A heatmap data visualization tells a different story about how the climate is changing. 
+
+## Getting Started
+
+Check out the [live demo](https://ryanjmack.github.io/Global-Surface-Temperature/)!
+
+This project is *not* responsive. The nature of the visualization is best viewed on larger devices.
+
+## Built With
+
+* HTML/SCSS
+* ES6 JavaScript
+* D3.js
+* Gulp for automating tasks
+
+
+## Final Thoughts
+D3 is starting to become a bit more intuitive for me, although there's always something more to learn! 
+
+---
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/ryanjmack/Global-Surface-Temperature/blob/master/LICENSE.md) file for details
