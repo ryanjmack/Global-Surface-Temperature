@@ -1,4 +1,4 @@
-[frontend-boilerplate] License
+Global Surface Temperature License
 MIT License
 Copyright © 2018
 
