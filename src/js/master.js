@@ -47,18 +47,18 @@ const maxVariance = dataset.reduce((a, b) => a = (a < b.variance) ? b.variance :
 const minVariance = dataset.reduce((a, b) => a = (a > b.variance) ? b.variance : a, Infinity);
 
 // colors used in the graph
-const colors = ['#0D095B', '#3249AB', '#127FC0', '#03CFD7', '#01C000', '#01C000', '#F8EF1C', '#FEBB11', '#F26322', '#FE0100'];
+const colors = ['#0D095B', '#00F', '#127FC0', '#03CFD7', '#01C000', '#01C000', '#F8EF1C', '#FEBB11', '#F26322', '#FE0100'];
 const colorsLength = colors.length;
 // minVariance + (colorStep * i) will give us color index
 const colorStep = (maxVariance + Math.abs(minVariance)) / colorsLength;
 
 // called when populating the graph with data
 const getColor = (variance) => {
-  let i = 0;
-  while (((i + 1) * colorStep) + minVariance < variance) {
+  let i = 1;
+  while ((i * colorStep) + minVariance < variance) {
     i++;
   }
-  return colors[i];
+  return colors[i - 1];
 };
 
 
@@ -78,8 +78,35 @@ svg.selectAll('rect')
   .attr('width', barWidth)
   .attr('height', barHeight)
   .attr('fill', data => getColor(data.variance))
-  .append('title')
-  .text(data => `${months[data.month - 1]}, ${data.year}\nVariance: ${data.variance}°C / ${convertCelsius(data.variance)}°F`);
+  .attr('id', (_, i) => i);
+
+
+/************************************************************************
+  Create a custom tooltip
+************************************************************************/
+const body = document.querySelector('body');
+const toolTip = document.createElement('div');
+toolTip.id = 'toolTip'
+toolTip.classList.add('hidden');
+body.appendChild(toolTip);
+
+body.addEventListener('mousemove', (e) => {
+  const cell = e.target.id;
+
+  // not hovered over a cell in the chart
+  if (!cell) {
+    toolTip.classList.add('hidden');
+  }
+  else {
+    const data = dataset[cell];
+    if (!data) return;
+
+    toolTip.classList.remove('hidden');
+    toolTip.innerHTML = `<p>${months[data.month - 1]}, ${data.year}</p><p>Variance: ${data.variance}°C / ${convertCelsius(data.variance)}°F</p>`;
+    toolTip.style.left = e.clientX + 20 + 'px';
+    toolTip.style.top = e.clientY + 'px';
+  }
+});
 
 
 /************************************************************************
