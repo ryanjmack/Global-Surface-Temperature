@@ -1,0 +1,15 @@
+#toolTip {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 3px;
+  color: white;
+  font-size: 1rem;
+  position: absolute;
+
+  p {
+    margin: 0.5em;
+  }
+}
+
+.hidden {
+  display: none;
+}
