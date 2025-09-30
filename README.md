@@ -1,3 +1,9 @@
+## Getting Started
+
+Check out the [live demo](https://ryanjmack.github.io/Global-Surface-Temperature/)!
+
+This project is *not* responsive. The nature of the visualization is best viewed on larger devices.
+
 # Global Surface Temperature
 
 This is a simple data visualization project I created using a dataset I found from [NOAA](https://www.ncdc.noaa.gov/cag/global/background) (National Oceanic and Atmospheric Administration) using the popular data visualization library [D3.js](https://d3js.org/).
@@ -8,12 +14,6 @@ An interesting thing to note about temperature change on a worldwide scale is th
 https://climate.nasa.gov/news/2458/why-a-half-degree-temperature-rise-is-a-big-deal/).
 
 A heatmap data visualization tells a different story about how the climate is changing. 
-
-## Getting Started
-
-Check out the [live demo](https://ryanjmack.github.io/Global-Surface-Temperature/)!
-
-This project is *not* responsive. The nature of the visualization is best viewed on larger devices.
 
 ## Built With
 
